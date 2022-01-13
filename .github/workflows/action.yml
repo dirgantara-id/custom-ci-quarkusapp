@@ -41,7 +41,7 @@ jobs:
       - name: Build with Maven
         # run: mvn --batch-mode --update-snapshots verify
         run: ./mvnw package
-      - run: mkdir ${{ inputs.app-name }}-v${{ inputs.app-version }} && cp {{PWD}}/*.jar ${{ inputs.app-name }}/${{ inputs.app-name }}-v${{ inputs.app-version }}.jar
+      - run: mkdir ${{ inputs.app-name }}-v${{ inputs.app-version }} && cp ${{PWD}}/*.jar ${{ inputs.app-name }}/${{ inputs.app-name }}-v${{ inputs.app-version }}.jar
         shell: bash
       - uses: actions/upload-artifact@v2
         with:
