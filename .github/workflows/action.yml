@@ -36,9 +36,11 @@ jobs:
         uses: stCarolas/setup-maven@v4.2
         with:
           maven-version: 3.8.2
+      - name: permission mvn
+        run: chmod +x ./
       - name: Build with Maven
         # run: mvn --batch-mode --update-snapshots verify
-        run: sudo ./mvnw package
+        run: ./mvnw package
       - run: mkdir ${{ inputs.app-name }}-v${{ inputs.app-version }} && cp target/*.jar ${{ inputs.app-name }}/${{ inputs.app-name }}-v${{ inputs.app-version }}.jar
         shell: bash
       - uses: actions/upload-artifact@v2
