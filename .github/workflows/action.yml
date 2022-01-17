@@ -68,6 +68,6 @@ jobs:
         with:
           project_id: ${{ secrets.GCLOUD_PROJECT_ID }}
           service_account_key: ${{ secrets.GCLOUD_KEY }}
-          export_default_credentials: true
+          #export_default_credentials: true
     
 
