@@ -69,8 +69,7 @@ jobs:
           project_id: ${{ secrets.GCLOUD_PROJECT_ID }}
           service_account_key: ${{ secrets.GCLOUD_KEY }}
           #export_default_credentials: true
-          
-      - name: Login to DTN Artifactory
-        run: cat ${{ secrets.GCLOUD_KEY }} | docker login -u _json_key --password-stdin https://asia-southeast2-docker.pkg.dev
+          name: Login to DTN Artifactory
+          run: cat ${{ secrets.GCLOUD_KEY }} | docker login -u _json_key --password-stdin https://asia-southeast2-docker.pkg.dev
     
 
