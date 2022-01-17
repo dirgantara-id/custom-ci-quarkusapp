@@ -71,7 +71,7 @@ jobs:
           #export_default_credentials: true
           
       - name: Login to DTN Artifactory
-	      run: | 
-		      cat $service_account_key docker login -u _json_key --password-stdin https://asia-southeast2-docker.pkg.dev
+      -	run: | 
+          cat $service_account_key docker login -u _json_key --password-stdin https://asia-southeast2-docker.pkg.dev
     
 
