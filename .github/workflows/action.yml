@@ -51,7 +51,7 @@ jobs:
           cat << EOF > Dockerfile 
           FROM openjdk:16-alpine3.13
           WORKDIR /app
-          COPY --chown=1001 ${{ inputs.app-name }}/${{ inputs.app-name }}-v${{ inputs.app-version }}.jar /app/ 
+          COPY --chown=1001 ${{ inputs.app-name }}-v${{ inputs.app-version }}/${{ inputs.app-name }}-v${{ inputs.app-version }}.jar /app/ 
           COPY --chown=1001 ${{ inputs.app-name }}/lib/ /app/lib/
           COPY --chown=1001 ${{ inputs.app-name }}/app/ /app/app/
           COPY --chown=1001 ${{ inputs.app-name }}/quarkus/ /app/quarkus/
