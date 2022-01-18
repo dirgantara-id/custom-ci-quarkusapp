@@ -41,7 +41,7 @@ jobs:
       - name: Build with Maven
         # run: mvn --batch-mode --update-snapshots verify
         run: ./mvnw package
-      - run: mkdir ${{ inputs.app-name }}-v${{ inputs.app-version }} && cp $(pwd)/target/quarkus-app/*.jar ${{ inputs.app-name }}-v${{ inputs.app-version }}/${{ inputs.app-name }}-v${{ inputs.app-version }}.jar
+      - run: mkdir ${{ inputs.app-name }}-v${{ inputs.app-version }} && cp $(pwd)/target/quarkus-app/*.jar ${{ inputs.app-name }}-v${{ inputs.app-version }}/${{ inputs.app-name }}-v${{ inputs.app-version }}.jar && cp -r $(pwd)/target/quarkus-app/* ${{ inputs.app-name }}-v${{ inputs.app-version }}/
         shell: bash
       - uses: actions/upload-artifact@v2
         with:
@@ -52,9 +52,9 @@ jobs:
           FROM openjdk:16-alpine3.13
           WORKDIR /app
           COPY --chown=1001 ${{ inputs.app-name }}-v${{ inputs.app-version }}/${{ inputs.app-name }}-v${{ inputs.app-version }}.jar /app/ 
-          COPY --chown=1001 ${{ inputs.app-name }}/lib/ /app/lib/
-          COPY --chown=1001 ${{ inputs.app-name }}/app/ /app/app/
-          COPY --chown=1001 ${{ inputs.app-name }}/quarkus/ /app/quarkus/
+          COPY --chown=1001 ${{ inputs.app-name }}-v${{ inputs.app-version }}/lib/ /app/lib/
+          COPY --chown=1001 ${{ inputs.app-name }}-v${{ inputs.app-version }}/app/ /app/app/
+          COPY --chown=1001 ${{ inputs.app-name }}-v${{ inputs.app-version }}/quarkus/ /app/quarkus/
           CMD ["java", "-jar", "${{ inputs.app-name }}-v${{ inputs.app-version }}.jar"]
           EOF
         shell: bash
