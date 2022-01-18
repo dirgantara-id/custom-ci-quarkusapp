@@ -74,9 +74,9 @@ jobs:
           project_id: ${{ secrets.project-id }}
           service_account_key: ${{ secrets.gcloud-key }}
           export_default_credentials: true
-      - name: Login and configure gcloud for docker
-        run: gcloud --quiet auth configure-docker
-        shell: bash
+      #- name: Login and configure gcloud for docker
+      #  run: gcloud --quiet auth configure-docker
+      #  shell: bash
       - name: Build Docker Image
         run: |
           docker build -t asia-southeast2-docker.pkg.dev/${{ inputs.app-name }}:${{ inputs.app-version }} . \
