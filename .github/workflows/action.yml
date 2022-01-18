@@ -18,6 +18,11 @@ on:
         default: 0.0.1
         type: string
         required: true
+    secrets:
+      project-id:
+        required: true
+      gcloud-key:
+         required: true
     
 jobs:
   build:
@@ -66,8 +71,8 @@ jobs:
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@master
         with:
-          project_id: ${{ secrets.GCLOUD_PROJECT_ID }}
-          service_account_key: ${{ secrets.GCLOUD_KEY }}
+          project_id: ${{ secrets.project-id }}
+          service_account_key: ${{ secrets.gcloud-key }}
           export_default_credentials: true
       - name: Login and configure gcloud for docker
         run: gcloud --quiet auth configure-docker
