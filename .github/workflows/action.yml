@@ -10,7 +10,7 @@ on:
         required: false
       app-name:
         description: 'put your application name here'
-        default: dtn-test
+        default: dtn-quarkus-native
         type: string
         required: true
       app-version:
