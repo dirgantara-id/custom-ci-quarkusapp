@@ -43,30 +43,8 @@ jobs:
           maven-version: 3.8.2
       - name: permission mvnw
         run: chmod +x ./mvnw
-      - name: Build with Maven
-        # run: mvn --batch-mode --update-snapshots verify
-        run: ./mvnw package
-      - run: mkdir ${{ inputs.app-name }}-v${{ inputs.app-version }} && cp -r $(pwd)/target/quarkus-app/* ${{ inputs.app-name }}-v${{ inputs.app-version }}/ && mv ${{ inputs.app-name }}-v${{ inputs.app-version }}/quarkus-run.jar ${{ inputs.app-name }}-v${{ inputs.app-version }}/${{ inputs.app-name }}-v${{ inputs.app-version }}.jar 
-        shell: bash
-      - uses: actions/upload-artifact@v2
-        with:
-          name: ${{ inputs.app-name }}-v${{ inputs.app-version }}
-          path: ${{ inputs.app-name }}-v${{ inputs.app-version }}
-      - run: |
-          cat << EOF > Dockerfile 
-          FROM openjdk:16-alpine3.13
-          WORKDIR /app
-          COPY --chown=1001 ${{ inputs.app-name }}-v${{ inputs.app-version }}/${{ inputs.app-name }}-v${{ inputs.app-version }}.jar /app/ 
-          COPY --chown=1001 ${{ inputs.app-name }}-v${{ inputs.app-version }}/lib/ /app/lib/
-          COPY --chown=1001 ${{ inputs.app-name }}-v${{ inputs.app-version }}/app/ /app/app/
-          COPY --chown=1001 ${{ inputs.app-name }}-v${{ inputs.app-version }}/quarkus/ /app/quarkus/
-          CMD ["java", "-jar", "${{ inputs.app-name }}-v${{ inputs.app-version }}.jar"]
-          EOF
-        shell: bash
-      - run: |
-          cat Dockerfile
-        shell: bash
-
+      - name: Build Quarkus Native
+        run: ./mvnw package -Pnative -Dquarkus.native.container-build=true -Dquarkus.native.container-runtime=docker
         # Push To Artifactory
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@master
@@ -79,9 +57,10 @@ jobs:
         shell: bash
       - name: Build Docker Image
         run: |
-          docker build -t asia-southeast2-docker.pkg.dev/dtn-utility/dtn-container-registry/${{ inputs.app-name }}:${{ inputs.app-version }} . \
+          docker build -f src/main/docker/Dockerfile.native -t asia-southeast2-docker.pkg.dev/dtn-utility/dtn-container-registry/${{ inputs.app-name }}:${{ inputs.app-version }} . \
           && docker push asia-southeast2-docker.pkg.dev/dtn-utility/dtn-container-registry/${{ inputs.app-name }}:${{ inputs.app-version }}
         shell: bash
+      
  
     
 
