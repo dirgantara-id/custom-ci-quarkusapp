@@ -57,8 +57,8 @@ jobs:
         shell: bash
       - name: Build Docker Image
         run: |
-          docker build -f src/main/docker/Dockerfile.native -t asia-southeast2-docker.pkg.dev/dtn-utility/dtn-container-registry/${{ inputs.app-name }}:${{ inputs.app-version }} . \
-          && docker push asia-southeast2-docker.pkg.dev/dtn-utility/dtn-container-registry/${{ inputs.app-name }}:${{ inputs.app-version }}
+          docker build -f src/main/docker/Dockerfile.native -t asia.gcr.io/dtn-utility/${{ inputs.app-name }}:${{ inputs.app-version }} . \
+          && docker push asia.gcr.io/dtn-utility/${{ inputs.app-name }}:${{ inputs.app-version }}
         shell: bash
       
  
